@@ -10,10 +10,12 @@ def show_albums():
             print("{} . Artist: {} | Album: {} | Year: {} | Genre: {} | Lenght: {}".format(
                 i + 1, lineSplitted[0], lineSplitted[1], lineSplitted[2], lineSplitted[3], lineSplitted[4]))
 
-
-
-
-
+# funkcjazmieniająca czas w formacie "minuty:sekundy" na "sekundy"
+def time_to_seconds(x):
+    a = str(x)
+    a = a.split(':')
+    b = (int(a[0])*60)+int(a[1])
+    print(b)
 
 def switchPlaces(tab, i, j):
     temp = tab[j]
@@ -51,6 +53,7 @@ def show_temp():
             lineSplitted = line.split(" | ")
             print("{} . {} | {} | {} | {} | {}".format(
                 i + 1, lineSplitted[0], lineSplitted[1], lineSplitted[2], lineSplitted[3], lineSplitted[4]))
+
 
 
 sort_lenght()
