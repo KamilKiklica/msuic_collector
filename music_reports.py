@@ -15,7 +15,7 @@ def time_to_seconds(x):
     a = str(x)
     a = a.split(':')
     b = (int(a[0])*60)+int(a[1])
-    print(b)
+    return b
 
 def switchPlaces(tab, i, j):
     temp = tab[j]
@@ -34,7 +34,11 @@ def sort_lenght():
 
         for i in range(0, len(HScoreTempList)):
             for j in range(0, len(HScoreTempList)-1):
-                if int(HScoreTempList[j][4]) > int(HScoreTempList[j+1][4]):
+                a = (HScoreTempList[j][4])
+                b = (HScoreTempList[j+1][4])
+                aa = time_to_seconds(a)
+                bb = time_to_seconds(b)
+                if aa > bb:
                     HScoreTempList = switchPlaces(HScoreTempList, j, j+1)
 
     with open('lista.txt', 'r') as outfile:
