@@ -136,12 +136,26 @@ def show_time_range():
         if start_date <= album_temp_list[i][2] <= end_date:
             print(album_temp_list[i][0], album_temp_list[i][1])
 
-def search_by_name():
+def search_by_genre(): #szukanie po gatunku, sformatować drukowanie
     album_temp_list = sort_lenght()
-    search = input("Enter what atrist are you looking for: ")
-    if any(search in s for s in album_temp_list):
-        print(album_temp_list[i][0], album_temp_list[i][1])
+    genre = input("Type genre that you looking for: ")
+    for line in album_temp_list:
+        if genre in line[3]:
+            print([line])
+    else:
+        print("You don't have this kind of genre in collection.")
 
+def search_by_album():
+    album_temp_list = sort_lenght()
+    search_album = input("Type the name of album: ").capitalize()
+    for line in album_temp_list:
+        if search_album in line[1]:
+            print([line])
+    else:
+        print("You don't have a such album.")
+
+def search_by_artist():
+    pass
 
                 
 def main():  # powinno printować menu z wyborem sortowania
@@ -159,20 +173,16 @@ def main():  # powinno printować menu z wyborem sortowania
     if user_input == "2":
         show_time_range()
     if user_input == "3":
-        pass
+        search_by_album()
     if user_input == "4":
-        search_by_name()
+        search_by_genre()
     if user_input == "5":
-        pass
+        search_by_artist()
     if user_input == "6":
-        sort_lenght()
+        pass
     if user_input == "7":
-        show_all()
+        show_temp()
 
 
 if __name__ == "__main__":
     main()
-
-show_albums()
-sort_lenght()
-show_temp()
