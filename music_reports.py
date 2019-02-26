@@ -65,13 +65,6 @@ def show_temp(): #debug
         print('-'.ljust(album_len + artist_len + date_len + genre_len + album_lenght_len + 5, '-'))
 
 
-def make_list_of_list():   #make list of lists from file lista.txt
-    results = []
-    with open('lista.txt') as outfile:
-        for line in outfile:
-            results.append(line.strip().split(','))
-    return results
-
 
 def lenght_of_signs(iterating_number_of_column):   # checking lenght of signs for the longest value in each column
     k = make_list_of_list()
@@ -141,21 +134,25 @@ def search_by_genre(): #szukanie po gatunku, sformatować drukowanie
     genre = input("Type genre that you looking for: ")
     for line in album_temp_list:
         if genre in line[3]:
-            print([line])
-    else:
-        print("You don't have this kind of genre in collection.")
+            print(line)
+    #else:
+        #print("You don't have this kind of genre in collection.")
 
 def search_by_album():
     album_temp_list = sort_lenght()
-    search_album = input("Type the name of album: ").capitalize()
+    search_album = input("Type the name of album: ").title() #problem dla rock, bo małe litery
     for line in album_temp_list:
         if search_album in line[1]:
-            print([line])
-    else:
-        print("You don't have a such album.")
+            print(line)
+    #else:      Cały czas się drukuje, narazie nie włączam
+        #print("You don't have a such album.")
 
 def search_by_artist():
-    pass
+    album_temp_list = sort_lenght()
+    search_artist = input("Type the name of artist: ").title() #problem dla rock, bo małe litery
+    for line in album_temp_list:
+        if album_temp_list.index().title() == search_artist:
+            print(line)
 
                 
 def main():  # powinno printować menu z wyborem sortowania
