@@ -5,10 +5,11 @@ import sys
 def show_albums():
     print("")
     with open('lista.txt', 'r') as outfile:
+        print("Albums:")
         for i, line in enumerate(outfile):
             lineSplitted = line.split(",")
-            print("{} . Artist: {} | Album: {} | Year: {} | Genre: {} | Lenght: {}".format(
-                i + 1, lineSplitted[0], lineSplitted[1], lineSplitted[2], lineSplitted[3], lineSplitted[4]))
+            print("{}. {} ".format(
+                i + 1,  lineSplitted[1]))
 
 # funkcjazmieniająca czas w formacie "minuty:sekundy" na "sekundy"
 def time_to_seconds(x):
@@ -59,7 +60,7 @@ def show_temp():
                 i + 1, lineSplitted[0], lineSplitted[1], lineSplitted[2], lineSplitted[3], lineSplitted[4]))
 
 
-
+show_albums()
 sort_lenght()
 
 show_temp()
