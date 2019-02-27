@@ -13,9 +13,9 @@ def switchPlaces(tab, i, j):
     tab[i] = temp
     return tab
 
-def make_list_of_list():   #make list of lists from file lista.txt
+def make_list_of_list(filename):   #make list of lists from file lista.txt
     results = []
-    with open('lista.txt') as outfile:
+    with open(filename) as outfile:
         for line in outfile:
             results.append(line.strip().split(','))
     return results
@@ -65,11 +65,11 @@ def sort_lenght():
 def show_all(filename): #debug
     print("")
     with open(filename, 'r') as outfile:
-        artist_len = 1 + dynamic_spaces_column(0,0)
-        album_len = 1 + dynamic_spaces_column(1,1)
-        date_len = 1 + dynamic_spaces_column(2,2)
-        genre_len = 1 + dynamic_spaces_column(3,3)
-        album_lenght_len = 1 + dynamic_spaces_column(4,4)
+        artist_len = 1 + dynamic_spaces_column(0,0,filename)
+        album_len = 1 + dynamic_spaces_column(1,1,filename)
+        date_len = 1 + dynamic_spaces_column(2,2,filename)
+        genre_len = 1 + dynamic_spaces_column(3,3,filename)
+        album_lenght_len = 1 + dynamic_spaces_column(4,4,filename)
         #nr_len = lenght_of_signs_in_name_of_column(5,5)
         print("|" + "Nr.".ljust(4, ' ') + "|" + "Artist:".ljust(artist_len, ' ') + "|" + "Name of Album:".ljust(album_len, ' ') + "|" + "Date:".ljust(date_len, ' ')+ "|" + "Genre:".ljust(genre_len, ' ') + "|" + "Lenght of Album:".ljust(album_lenght_len, ' '))
         print('-'.ljust(artist_len + album_len + date_len + genre_len + album_lenght_len + 5, '-'))
@@ -81,8 +81,8 @@ def show_all(filename): #debug
 
 
 
-def lenght_of_signs(iterating_number_of_column):   # checking lenght of signs for the longest value in each column
-    k = make_list_of_list()
+def lenght_of_signs(iterating_number_of_column, filename):   # checking lenght of signs for the longest value in each column
+    k = make_list_of_list(filename)
     len_k = len(k)  #lenght of main list
     len_m = len(k[0])  #lenght of elements in list of list
     list_column = []
@@ -109,9 +109,9 @@ def lenght_of_signs_in_name_of_column(parameter):
     #    a = len(a[5])
     return a
 
-def dynamic_spaces_column(a,b):
-    if lenght_of_signs_in_name_of_column(a) <= lenght_of_signs(b):
-        a = lenght_of_signs(b)
+def dynamic_spaces_column(a,b,filename):
+    if lenght_of_signs_in_name_of_column(a) <= lenght_of_signs(b,filename):
+        a = lenght_of_signs(b,filename)
     else:
         a = lenght_of_signs_in_name_of_column(a)
     return a
