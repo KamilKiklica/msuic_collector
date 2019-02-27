@@ -117,16 +117,6 @@ def dynamic_spaces_column(a,b):
     return a
 
 
-def show_albums():
-    print("")
-    with open('lista.txt', 'r') as outfile:
-        print("Albums:")
-        for i, line in enumerate(outfile):
-            lineSplitted = line.split(",")
-            print("{}. {} ".format(
-                i + 1,  lineSplitted[1]))
-
-
 def show_time_range():          
     album_temp_list = list_from_main_file()
     print("What time range of albums release would you like to see?")
@@ -184,31 +174,40 @@ def search_by_artist():
             f.close()
     show_all('temp.txt')
 
+def search_shortest_longest():
+    album_temp_list = sort_lenght()
+
                 
 def main():  # powinno printować menu z wyborem sortowania
-    print("1. Show albums" + "\n"
-          "2. Find by year" + "\n"
-          "3. Find album by name" + "\n"
-          "4. Find by genre" + "\n"
-          "5. Find by artist" + "\n"
-          "6. Show shortest/longest" + "\n"
-          "7. Show whole informations" + "\n"
-          )
-    user_input = input("Which option would you like to chose? <1-8>: ")
-    if user_input == "1":
-        show_all('lista.txt')
-    if user_input == "2":
-        show_time_range()
-    if user_input == "3":
-        search_by_album()
-    if user_input == "4":
-        search_by_genre()
-    if user_input == "5":
-        search_by_artist()
-    if user_input == "6":
-        pass
-    if user_input == "7":
-        show_all('lista.txt')
+    user_not_turn_off = True
+    while user_not_turn_off:
+        print("1. Show albums" + "\n"
+            "2. Find by year" + "\n"
+            "3. Find album by name" + "\n"
+            "4. Find by genre" + "\n"
+            "5. Find by artist" + "\n"
+            "6. Show shortest/longest" + "\n"
+            "7. Show whole informations" + "\n"
+            "8. Quit the program" + "\n"         
+                )
+        user_input = input("Which option would you like to chose? <1-8>: ")
+        if user_input == "1":
+            show_all('lista.txt')
+        if user_input == "2":
+            show_time_range()
+        if user_input == "3":
+            search_by_album()
+        if user_input == "4":
+            search_by_genre()
+        if user_input == "5":
+            search_by_artist()
+        if user_input == "6":
+            search_shortest_longest()
+        if user_input == "7":
+            show_all('lista.txt')
+        if user_input == "8":
+            user_not_turn_off = False
+
 
         
 if __name__ == "__main__":
