@@ -20,6 +20,22 @@ def make_list_of_list():   #make list of lists from file lista.txt
             results.append(line.strip().split(','))
     return results
 
+def make_list_of_temp():   #make list of lists from file lista.txt
+    a = []
+    with open('temp.txt') as outfile:
+        for line in outfile:
+            results.append(line.strip().split(','))
+    return a
+
+
+def list_from_main_file():
+    print("")
+    album_temp_list = []
+    with open('lista.txt', 'r') as outfile:
+        for i, line in enumerate(outfile):
+            lineSplitted = line.split(",")
+            album_temp_list.append(lineSplitted)
+    return album_temp_list
 
 def sort_lenght():
     print("")
@@ -41,15 +57,14 @@ def sort_lenght():
     with open('lista.txt', 'r') as outfile:
         f = open("temp.txt", "w+")
         for i, line in enumerate(album_temp_list):
-            lineToWrite = "{} | {} | {} | {} | {}".format(
+            lineToWrite = "{},{},{},{},{}".format(
                album_temp_list[i][0], album_temp_list[i][1], album_temp_list[i][2], album_temp_list[i][3], album_temp_list[i][4])
             f.write(lineToWrite)
-
     return(album_temp_list)
 
-def show_temp(): #debug
+def show_all(filename): #debug
     print("")
-    with open('temp.txt', 'r') as outfile:
+    with open(filename, 'r') as outfile:
         artist_len = 1 + dynamic_spaces_column(0,0)
         album_len = 1 + dynamic_spaces_column(1,1)
         date_len = 1 + dynamic_spaces_column(2,2)
@@ -59,7 +74,7 @@ def show_temp(): #debug
         print("|" + "Nr.".ljust(4, ' ') + "|" + "Artist:".ljust(artist_len, ' ') + "|" + "Name of Album:".ljust(album_len, ' ') + "|" + "Date:".ljust(date_len, ' ')+ "|" + "Genre:".ljust(genre_len, ' ') + "|" + "Lenght of Album:".ljust(album_lenght_len, ' '))
         print('-'.ljust(artist_len + album_len + date_len + genre_len + album_lenght_len + 5, '-'))
         for i, line in enumerate(outfile):
-            lineSplitted = line.split(" | ")
+            lineSplitted = line.split(",")
             print("|{}|{}|{}|{}|{}|{}".format(
                 (str(i + 1) + ".").ljust(4, ' '), lineSplitted[0].ljust(artist_len, ' '), lineSplitted[1].ljust(album_len, ' '), lineSplitted[2].ljust(date_len, ' '), lineSplitted[3].ljust(genre_len, ' '), lineSplitted[4].ljust(album_lenght_len, ' ')))
         print('-'.ljust(artist_len + album_len + date_len + genre_len + album_lenght_len + 5, '-'))
@@ -102,14 +117,6 @@ def dynamic_spaces_column(a,b):
     return a
 
 
-def show_all():
-    print("")
-    with open('lista.txt', 'r') as outfile:
-        for i, line in enumerate(outfile):
-            lineSplitted = line.split(",")
-            print("{} . {} | {} | {} | {} | {}".format(
-                i + 1, lineSplitted[0], lineSplitted[1], lineSplitted[2], lineSplitted[3], lineSplitted[4]))
-
 def show_albums():
     print("")
     with open('lista.txt', 'r') as outfile:
@@ -121,38 +128,61 @@ def show_albums():
 
 
 def show_time_range():          
-    album_temp_list = sort_lenght()
+    album_temp_list = list_from_main_file()
     print("What time range of albums release would you like to see?")
     start_date = input("Enter start date: ")
     end_date = input("Enter end date: ")
-    for i in range(len(album_temp_list)):
-        if start_date <= album_temp_list[i][2] <= end_date:
-            print(album_temp_list[i][0], album_temp_list[i][1])
+    years_range = list(range(int(start_date), int(end_date)+1))
+    open('temp.txt', 'w').close()
+    for line in album_temp_list:
+        #if start_date <= album_temp_list[2] <= end_date:
+        if int(line[2]) in years_range:
+            b = ','.join(line)
+            f = open('temp.txt', 'a')
+            f.write(b)
+            f.close()
+    show_all('temp.txt')
 
-def search_by_genre(): #szukanie po gatunku, sformatować drukowanie
-    album_temp_list = sort_lenght()
+
+def search_by_genre(): #szukanie po gatunku, drukowanie działa
+    album_temp_list = list_from_main_file()
     genre = input("Type genre that you looking for: ")
+    open('temp.txt', 'w').close()
     for line in album_temp_list:
         if genre in line[3]:
-            print(line)
+            b = ','.join(line)
+            f = open('temp.txt', 'a')
+            f.write(b)
+            f.close()
+    show_all('temp.txt')
     #else:
         #print("You don't have this kind of genre in collection.")
 
 def search_by_album():
-    album_temp_list = sort_lenght()
-    search_album = input("Type the name of album: ").title() #problem dla rock, bo małe litery
+    album_temp_list = list_from_main_file()
+    search_album = input("Type the name of album: ")#.title() #problem dla rock, bo małe litery
+    open('temp.txt', 'w').close()
     for line in album_temp_list:
         if search_album in line[1]:
-            print(line)
+            b = ','.join(line)
+            f = open('temp.txt', 'a')
+            f.write(b)
+            f.close()
+    show_all('temp.txt')
     #else:      Cały czas się drukuje, narazie nie włączam
         #print("You don't have a such album.")
 
 def search_by_artist():
-    album_temp_list = sort_lenght()
-    search_artist = input("Type the name of artist: ").title() #problem dla rock, bo małe litery
+    album_temp_list = list_from_main_file()
+    search_artist = input("Type the name of artist: ")#.title() #problem dla rock, bo małe litery
+    open('temp.txt', 'w').close()
     for line in album_temp_list:
-        if album_temp_list.index().title() == search_artist:
-            print(line)
+        if  search_artist in line[0]:
+            b = ','.join(line)
+            f = open('temp.txt', 'a')
+            f.write(b)
+            f.close()
+    show_all('temp.txt')
 
                 
 def main():  # powinno printować menu z wyborem sortowania
@@ -166,7 +196,7 @@ def main():  # powinno printować menu z wyborem sortowania
           )
     user_input = input("Which option would you like to chose? <1-8>: ")
     if user_input == "1":
-        show_albums()
+        show_all('lista.txt')
     if user_input == "2":
         show_time_range()
     if user_input == "3":
@@ -178,8 +208,8 @@ def main():  # powinno printować menu z wyborem sortowania
     if user_input == "6":
         pass
     if user_input == "7":
-        show_temp()
+        show_all('lista.txt')
 
-
+        
 if __name__ == "__main__":
     main()
