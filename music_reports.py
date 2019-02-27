@@ -146,10 +146,10 @@ def show_time_range():
 
 def search_by_genre(): #szukanie po gatunku, drukowanie działa
     album_temp_list = list_from_main_file()
-    genre = input("Type genre that you looking for: ")
+    genre = input("Type genre that you looking for: ").casefold()
     open('temp.txt', 'w').close()
     for line in album_temp_list:
-        if genre in line[3]:
+        if genre in line[3].casefold():
             b = ','.join(line)
             f = open('temp.txt', 'a')
             f.write(b)
@@ -160,10 +160,10 @@ def search_by_genre(): #szukanie po gatunku, drukowanie działa
 
 def search_by_album():
     album_temp_list = list_from_main_file()
-    search_album = input("Type the name of album: ")#.title() #problem dla rock, bo małe litery
+    search_album = input("Type the name of album: ").casefold()#.title() #problem dla rock, bo małe litery
     open('temp.txt', 'w').close()
     for line in album_temp_list:
-        if search_album in line[1]:
+        if search_album in line[1].casefold():
             b = ','.join(line)
             f = open('temp.txt', 'a')
             f.write(b)
@@ -174,10 +174,10 @@ def search_by_album():
 
 def search_by_artist():
     album_temp_list = list_from_main_file()
-    search_artist = input("Type the name of artist: ")#.title() #problem dla rock, bo małe litery
+    search_artist = input("Type the name of artist: ").casefold()#.title() #problem dla rock, bo małe litery
     open('temp.txt', 'w').close()
     for line in album_temp_list:
-        if  search_artist in line[0]:
+        if  search_artist in line[0].casefold():
             b = ','.join(line)
             f = open('temp.txt', 'a')
             f.write(b)
