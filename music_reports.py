@@ -63,7 +63,7 @@ def sort_lenght():
     return(album_temp_list)
 
 def show_all(filename): #debug
-    print("")
+    os.system('clear')
     with open(filename, 'r') as outfile:
         artist_len = 1 + dynamic_spaces_column(0,0,filename)
         album_len = 1 + dynamic_spaces_column(1,1,filename)
@@ -150,7 +150,7 @@ def search_by_genre(): #szukanie po gatunku, drukowanie działa
 
 def search_by_album():
     album_temp_list = list_from_main_file()
-    search_album = input("Type the name of album: ").casefold()#.title() #problem dla rock, bo małe litery
+    search_album = input("Type the name of album: ").casefold()
     open('temp.txt', 'w').close()
     for line in album_temp_list:
         if search_album in line[1].casefold():
@@ -164,10 +164,10 @@ def search_by_album():
 
 def search_by_artist():
     album_temp_list = list_from_main_file()
-    search_artist = input("Type the name of artist: ").casefold()#.title() #problem dla rock, bo małe litery
+    search_artist = input("Type the name of artist: ").casefold()
     open('temp.txt', 'w').close()
     for line in album_temp_list:
-        if  search_artist in line[0].casefold():
+        if search_artist in line[0].casefold():
             b = ','.join(line)
             f = open('temp.txt', 'a')
             f.write(b)
@@ -176,6 +176,15 @@ def search_by_artist():
 
 def search_shortest_longest():
     album_temp_list = sort_lenght()
+    print(album_temp_list)
+    open('temp.txt', 'w').close()
+    b = ','.join(album_temp_list[0])
+    c = ','.join(album_temp_list[-1])
+    f = open("temp.txt", "a")
+    f.write(b)
+    f.write(c)
+    f.close()
+    show_all('temp.txt')
 
                 
 def main():  # powinno printować menu z wyborem sortowania
