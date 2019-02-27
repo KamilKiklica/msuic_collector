@@ -38,7 +38,6 @@ def list_from_main_file():
     return album_temp_list
 
 def sort_lenght():
-    print("")
     album_temp_list = []
     with open('lista.txt', 'r') as outfile:
         for i, line in enumerate(outfile):
@@ -61,6 +60,29 @@ def sort_lenght():
                album_temp_list[i][0], album_temp_list[i][1], album_temp_list[i][2], album_temp_list[i][3], album_temp_list[i][4])
             f.write(lineToWrite)
     return(album_temp_list)
+
+def sort_by_years():
+    album_temp_list = []
+    with open('lista.txt', 'r') as outfile:
+        for i, line in enumerate(outfile):
+            lineSplitted = line.split(",")
+            album_temp_list.append(lineSplitted)
+
+        for i in range(0, len(album_temp_list)):
+            for j in range(0, len(album_temp_list)-1):
+                a = (album_temp_list[j][2])
+                b = (album_temp_list[j+1][2]) 
+                if a > b:
+                    album_temp_list = switchPlaces(album_temp_list, j, j+1)
+
+    with open('lista.txt', 'r') as outfile:
+        f = open("temp.txt", "w+")
+        for i, line in enumerate(album_temp_list):
+            lineToWrite = "{},{},{},{},{}".format(
+               album_temp_list[i][0], album_temp_list[i][1], album_temp_list[i][2], album_temp_list[i][3], album_temp_list[i][4])
+            f.write(lineToWrite)
+    return(album_temp_list)
+
 
 def show_all(filename): #debug
     os.system('clear')
@@ -185,6 +207,18 @@ def search_shortest_longest():
     f.write(c)
     f.close()
     show_all('temp.txt')
+    return album_temp_list
+
+def albums_count():
+    num_lines = sum(1 for line in open('lista.txt'))
+    return num_lines
+
+def show_report():
+    num_lines = albums_count()
+    albums_temp_list = search_shortest_longest()
+    sort_by_years()
+
+    
 
                 
 def main():  # powinno printować menu z wyborem sortowania
@@ -196,7 +230,7 @@ def main():  # powinno printować menu z wyborem sortowania
             "4. Find by genre" + "\n"
             "5. Find by artist" + "\n"
             "6. Show shortest/longest" + "\n"
-            "7. Show whole informations" + "\n"
+            "7. Show report" + "\n"
             "8. Quit the program" + "\n"         
                 )
         user_input = input("Which option would you like to chose? <1-8>: ")
@@ -213,7 +247,7 @@ def main():  # powinno printować menu z wyborem sortowania
         if user_input == "6":
             search_shortest_longest()
         if user_input == "7":
-            show_all('lista.txt')
+            show_report()
         if user_input == "8":
             user_not_turn_off = False
 
