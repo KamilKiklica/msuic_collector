@@ -84,7 +84,7 @@ def sort_by_years():
     return(album_temp_list)
 
 
-def show_all(filename): #debug
+def show_all(filename, user_report=False): #debug
     os.system('clear')
     with open(filename, 'r') as outfile:
         artist_len = 1 + dynamic_spaces_column(0,0,filename)
@@ -92,15 +92,24 @@ def show_all(filename): #debug
         date_len = 1 + dynamic_spaces_column(2,2,filename)
         genre_len = 1 + dynamic_spaces_column(3,3,filename)
         album_lenght_len = 1 + dynamic_spaces_column(4,4,filename)
-        #nr_len = lenght_of_signs_in_name_of_column(5,5)
-        print("|" + "Nr.".ljust(4, ' ') + "|" + "Artist:".ljust(artist_len, ' ') + "|" + "Name of Album:".ljust(album_len, ' ') + "|" + "Date:".ljust(date_len, ' ')+ "|" + "Genre:".ljust(genre_len, ' ') + "|" + "Lenght of Album:".ljust(album_lenght_len, ' '))
-        print('-'.ljust(artist_len + album_len + date_len + genre_len + album_lenght_len + 5, '-'))
-        for i, line in enumerate(outfile):
-            lineSplitted = line.split(",")
-            print("|{}|{}|{}|{}|{}|{}".format(
-                (str(i + 1) + ".").ljust(4, ' '), lineSplitted[0].ljust(artist_len, ' '), lineSplitted[1].ljust(album_len, ' '), lineSplitted[2].ljust(date_len, ' '), lineSplitted[3].ljust(genre_len, ' '), lineSplitted[4].ljust(album_lenght_len, ' ')))
-        print('-'.ljust(artist_len + album_len + date_len + genre_len + album_lenght_len + 5, '-'))
-
+        if user_report == False:
+            print("|" + "Nr.".ljust(4, ' ') + "|" + "Artist:".ljust(artist_len, ' ') + "|" + "Name of Album:".ljust(album_len, ' ') + "|" + "Date:".ljust(date_len, ' ')+ "|" + "Genre:".ljust(genre_len, ' ') + "|" + "Lenght of Album:".ljust(album_lenght_len, ' '))
+            print('-'.ljust(artist_len + album_len + date_len + genre_len + album_lenght_len + 5, '-'))
+            for i, line in enumerate(outfile):
+                lineSplitted = line.split(",")
+                print("|{}|{}|{}|{}|{}|{}".format(
+                    (str(i + 1) + ".").ljust(4, ' '), lineSplitted[0].ljust(artist_len, ' '), lineSplitted[1].ljust(album_len, ' '), lineSplitted[2].ljust(date_len, ' '), lineSplitted[3].ljust(genre_len, ' '), lineSplitted[4].ljust(album_lenght_len, ' ')))
+            print('-'.ljust(artist_len + album_len + date_len + genre_len + album_lenght_len + 5, '-'))
+        if user_report == True:
+            #statistic_len = 1 + dynamic_spaces_column(5,5,filename)
+            print("|" + "Nr.".ljust(4, ' ') + "|" + "Artist:".ljust(artist_len, ' ') + "|" + "Name of Album:".ljust(album_len, ' ') + "|" + "Date:".ljust(date_len, ' ')+ "|" + "Genre:".ljust(genre_len, ' ') + "|" + "Lenght of Album:".ljust(album_lenght_len, ' '))
+            print('-'.ljust(artist_len + album_len + date_len + genre_len + album_lenght_len + 5, '-'))
+            for i, line in enumerate(outfile):
+                lineSplitted = line.split(",")
+                print("|{}|{}|{}|{}|{}|{}".format(
+                    (str(i + 1) + ".").ljust(4, ' '), lineSplitted[0].ljust(artist_len, ' '), lineSplitted[1].ljust(album_len, ' '), lineSplitted[2].ljust(date_len, ' '), lineSplitted[3].ljust(genre_len, ' '), lineSplitted[4].ljust(album_lenght_len, ' ')))
+            print('-'.ljust(artist_len + album_len + date_len + genre_len + album_lenght_len + 5, '-'))
+            #pass
 
 
 def lenght_of_signs(iterating_number_of_column, filename):   # checking lenght of signs for the longest value in each column
@@ -116,7 +125,7 @@ def lenght_of_signs(iterating_number_of_column, filename):   # checking lenght o
 
   
 def lenght_of_signs_in_name_of_column(parameter):
-    a = ["Artist:","Name of Album:","Date:", "Genre:","Lenght of Album:"]
+    a = ["Artist:","Name of Album:","Date:", "Genre:","Lenght of Album:","Statistic:"]
     if parameter == 0:
         a = len(a[0])
     elif parameter == 1:
@@ -127,8 +136,8 @@ def lenght_of_signs_in_name_of_column(parameter):
         a = len(a[3])
     elif parameter == 4:
         a = len(a[4])
-    #elif parameter == 5:
-    #    a = len(a[5])
+    elif parameter == 5:
+        a = len(a[5])
     return a
 
 def dynamic_spaces_column(a,b,filename):
@@ -217,6 +226,7 @@ def show_report():
     num_lines = albums_count()
     albums_temp_list = search_shortest_longest()
     sort_by_years()
+    user_report = True
 
     
 
@@ -247,7 +257,7 @@ def main():  # powinno printować menu z wyborem sortowania
         if user_input == "6":
             search_shortest_longest()
         if user_input == "7":
-            show_report()
+            show_all('temp.txt' , True)#in progress
         if user_input == "8":
             user_not_turn_off = False
 
@@ -255,3 +265,13 @@ def main():  # powinno printować menu z wyborem sortowania
         
 if __name__ == "__main__":
     main()
+
+'''
+            print("|" + "Statistic:".ljust(statistic_len, ' ') + "|" + "Nr.".ljust(4, ' ') + "|" + "Artist:".ljust(artist_len, ' ') + "|" + "Name of Album:".ljust(album_len, ' ') + "|" + "Date:".ljust(date_len, ' ')+ "|" + "Genre:".ljust(genre_len, ' ') + "|" + "Lenght of Album:".ljust(album_lenght_len, ' '))
+            print('-'.ljust(statistic_len + artist_len + album_len + date_len + genre_len + album_lenght_len + 5, '-'))
+            for i, line in enumerate(outfile):
+                lineSplitted = line.split(",")
+                print("|{}|{}|{}|{}|{}|{}|{}".format(
+                    (lineSplitted[5].ljust(statistic_len, ' '), str(i + 1) + ".".ljust(4, ' '), lineSplitted[0].ljust(artist_len, ' '), lineSplitted[1].ljust(album_len, ' '), lineSplitted[2].ljust(date_len, ' '), lineSplitted[3].ljust(genre_len, ' '), lineSplitted[4].ljust(album_lenght_len, ' '))))
+            print('-'.ljust(statistic_len + artist_len + album_len + date_len + genre_len + album_lenght_len + 5, '-'))            
+'''            
