@@ -74,31 +74,42 @@ def sort_by_years():
                 b = int(album_temp_list[j+1][2]) 
                 if a > b:
                     album_temp_list = switchPlaces(album_temp_list, j, j+1)
-
     with open('lista.txt', 'r') as outfile:
         f = open("temp.txt", "w+")
         for i, line in enumerate(album_temp_list):
             lineToWrite = "{},{},{},{},{}".format(
-               album_temp_list[i][0], album_temp_list[i][1], album_temp_list[i][2], album_temp_list[i][3], album_temp_list[i][4])
+            album_temp_list[i][0], album_temp_list[i][1], album_temp_list[i][2], album_temp_list[i][3], album_temp_list[i][4])
             f.write(lineToWrite)
     return(album_temp_list)
 
-'''def show_time_range():          
-    album_temp_list = list_from_main_file()
-    print("What time range of albums release would you like to see?")
-    start_date = input("Enter start date: ")
-    end_date = input("Enter end date: ")
-    years_range = list(range(int(start_date), int(end_date)+1))
+def oldest_albums():
+    album_temp_list = sort_by_years()
+    years_range = album_temp_list[0][2]
     open('temp.txt', 'w').close()
     for line in album_temp_list:
-        #if start_date <= album_temp_list[2] <= end_date:
-        if int(line[2]) in years_range:
+       #if start_date <= album_temp_list[2] <= end_date:
+#        if int(line[2]) in years_range:
+        if line[2] in years_range:
             b = ','.join(line)
             f = open('temp.txt', 'a')
             f.write(b)
             f.close()
-    show_all('temp.txt')
-'''
+    show_all('temp.txt',False,False)
+
+def youngest_albums():      
+    album_temp_list = sort_by_years()
+    years_range = album_temp_list[-1][2]
+    open('temp.txt', 'w').close()
+    for line in album_temp_list:
+        #if start_date <= album_temp_list[2] <= end_date:
+#        if int(line[2]) in years_range:
+        if line[2] in years_range:
+            b = ','.join(line)
+            f = open('temp.txt', 'a')
+            f.write(b)
+            f.close()
+    show_all('temp.txt',False,False)
+
 
 def show_all(filename, user_report=False, clear=True): #debug
     if clear == True:
@@ -130,8 +141,11 @@ def show_all(filename, user_report=False, clear=True): #debug
             search_longest()
             print(' OLDEST ALBUM '.center(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '='))
             print(a)
+            oldest_albums()
             print(' YOUNGEST ALBUM '.center(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '='))
             print(a)
+            youngest_albums()
+            #sort_by_years(True,True)
             print(' ALL ALBUM COUNT '.center(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '='))
             print(a)
             print(a)
@@ -178,7 +192,7 @@ def dynamic_spaces_column(a,b,filename):
 
 
 def show_time_range():          
-    album_temp_list = list_from_main_file()
+    album_temp_list = sort_by_years()
     print("What time range of albums release would you like to see?")
     start_date = input("Enter start date: ")
     end_date = input("Enter end date: ")
