@@ -28,10 +28,10 @@ def make_list_of_temp():   #make list of lists from file lista.txt
     return a
 
 
-def list_from_main_file():
+def list_from_main_file(filename = "lista.txt"):
     print("")
     album_temp_list = []
-    with open('lista.txt', 'r') as outfile:
+    with open(filename, 'r') as outfile:
         for i, line in enumerate(outfile):
             lineSplitted = line.split(",")
             album_temp_list.append(lineSplitted)
@@ -222,8 +222,7 @@ def search_by_genre(): #szukanie po gatunku, drukowanie działa
             f.write(b)
             f.close()
     show_all('temp.txt')
-    #else:
-        #print("You don't have this kind of genre in collection.")
+
 
 def search_by_album():
     album_temp_list = list_from_main_file()
@@ -235,9 +234,23 @@ def search_by_album():
             f = open('temp.txt', 'a')
             f.write(b)
             f.close()
-    show_all('temp.txt')
-    #else:      Cały czas się drukuje, narazie nie włączam
-        #print("You don't have a such album.")
+            temp_list_txt = []
+            temp_list_txt = list_from_main_file("lista.txt")
+            genre_main = line[3]
+            os.system('clear')
+            show_all('temp.txt', False, True)
+            open('temp.txt', 'w').close()
+            for line in temp_list_txt:
+                if genre_main in line[3].casefold():
+                    b = ','.join(line)
+                    f = open('temp.txt', 'a')
+                    f.write(b)
+                    f.close()
+            print(" ")        
+            print("          Suggested similar albums for this genre: ")
+            print(" ")        
+            show_all('temp.txt', False, False)
+
 
 def search_by_artist():
     album_temp_list = list_from_main_file()
