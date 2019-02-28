@@ -70,8 +70,8 @@ def sort_by_years():
 
         for i in range(0, len(album_temp_list)):
             for j in range(0, len(album_temp_list)-1):
-                a = (album_temp_list[j][2])
-                b = (album_temp_list[j+1][2]) 
+                a = int(album_temp_list[j][2])
+                b = int(album_temp_list[j+1][2]) 
                 if a > b:
                     album_temp_list = switchPlaces(album_temp_list, j, j+1)
 
@@ -83,6 +83,22 @@ def sort_by_years():
             f.write(lineToWrite)
     return(album_temp_list)
 
+'''def show_time_range():          
+    album_temp_list = list_from_main_file()
+    print("What time range of albums release would you like to see?")
+    start_date = input("Enter start date: ")
+    end_date = input("Enter end date: ")
+    years_range = list(range(int(start_date), int(end_date)+1))
+    open('temp.txt', 'w').close()
+    for line in album_temp_list:
+        #if start_date <= album_temp_list[2] <= end_date:
+        if int(line[2]) in years_range:
+            b = ','.join(line)
+            f = open('temp.txt', 'a')
+            f.write(b)
+            f.close()
+    show_all('temp.txt')
+'''
 
 def show_all(filename, user_report=False, clear=True): #debug
     if clear == True:
