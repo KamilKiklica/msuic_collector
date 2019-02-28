@@ -1,6 +1,6 @@
 import os
 import sys
-
+import display
 def time_to_seconds(x):  # funkcjazmieniająca czas w formacie "minuty:sekundy" na "sekundy"
     a = str(x)
     a = a.split(':')
@@ -111,9 +111,9 @@ def show_all(filename, user_report=False, clear=True): #debug
         date_len = 1 + dynamic_spaces_column(2,2,filename)
         genre_len = 1 + dynamic_spaces_column(3,3,filename)
         album_lenght_len = 1 + dynamic_spaces_column(4,4,filename)
-        a = ('-'.ljust(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '-'))
+        a = (''.ljust(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '-'))
         if user_report == False:
-            print("|" + "Nr.".ljust(4, ' ') + "|" + "Artist:".ljust(artist_len, ' ') + "|" + "Name of Album:".ljust(album_len, ' ') + "|" + "Date:".ljust(date_len, ' ')+ "|" + "Genre:".ljust(genre_len, ' ') + "|" + "Lenght of Album:".ljust(album_lenght_len, ' '))
+            print("" + "Nr.".ljust(4, ' ') + "|" + "Artist:".ljust(artist_len, ' ') + "|" + "Name of Album:".ljust(album_len, ' ') + "|" + "Date:".ljust(date_len, ' ')+ "|" + "Genre:".ljust(genre_len, ' ') + "|" + "Lenght of Album:".ljust(album_lenght_len, ' '))
             print(a)
             for i, line in enumerate(outfile):
                 lineSplitted = line.strip('\n').split(",")
@@ -133,6 +133,8 @@ def show_all(filename, user_report=False, clear=True): #debug
             print(' YOUNGEST ALBUM '.center(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '='))
             print(a)
             print(' ALL ALBUM COUNT '.center(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '='))
+            num_lines = albums_count()
+            print("             You have {} albums in your collection.".format(num_lines))
             print(a)
             print(a)
             print(a)
@@ -182,16 +184,17 @@ def show_time_range():
     print("What time range of albums release would you like to see?")
     start_date = input("Enter start date: ")
     end_date = input("Enter end date: ")
-    years_range = list(range(int(start_date), int(end_date)+1))
-    open('temp.txt', 'w').close()
-    for line in album_temp_list:
-        #if start_date <= album_temp_list[2] <= end_date:
-        if int(line[2]) in years_range:
-            b = ','.join(line)
-            f = open('temp.txt', 'a')
-            f.write(b)
-            f.close()
-    show_all('temp.txt')
+    while start_date and end_date == int:
+        years_range = list(range(int(start_date), int(end_date)+1))
+        open('temp.txt', 'w').close()
+        for line in album_temp_list:
+            #if start_date <= album_temp_list[2] <= end_date:
+            if int(line[2]) in years_range:
+                b = ','.join(line)
+                f = open('temp.txt', 'a')
+                f.write(b)
+                f.close()
+        show_all('temp.txt')
 
 
 def search_by_genre(): #szukanie po gatunku, drukowanie działa
