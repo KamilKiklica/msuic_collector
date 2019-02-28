@@ -122,9 +122,9 @@ def show_all(filename, user_report=False, clear=True): #debug
         date_len = 1 + dynamic_spaces_column(2,2,filename)
         genre_len = 1 + dynamic_spaces_column(3,3,filename)
         album_lenght_len = 1 + dynamic_spaces_column(4,4,filename)
-        a = (''.ljust(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '-'))
+        a = (''.ljust(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '─'))
         if user_report == False:
-            print("" + "Nr.".ljust(4, ' ') + "|" + "Artist:".ljust(artist_len, ' ') + "|" + "Name of Album:".ljust(album_len, ' ') + "|" + "Date:".ljust(date_len, ' ')+ "|" + "Genre:".ljust(genre_len, ' ') + "|" + "Lenght of Album:".ljust(album_lenght_len, ' '))
+            print("|" + "Nr.".ljust(4, ' ') + "|" + "Artist:".ljust(artist_len, ' ') + "|" + "Name of Album:".ljust(album_len, ' ') + "|" + "Date:".ljust(date_len, ' ')+ "|" + "Genre:".ljust(genre_len, ' ') + "|" + "Lenght of Album:".ljust(album_lenght_len, ' '))
             print(a)
             for i, line in enumerate(outfile):
                 lineSplitted = line.strip('\n').split(",")
@@ -132,26 +132,26 @@ def show_all(filename, user_report=False, clear=True): #debug
                     (str(i + 1) + ".").ljust(4, ' '), lineSplitted[0].ljust(artist_len, ' '), lineSplitted[1].ljust(album_len, ' '), lineSplitted[2].ljust(date_len, ' '), lineSplitted[3].ljust(genre_len, ' '), lineSplitted[4].ljust(album_lenght_len, ' ')))
             print(a)
         if user_report == True:
-            print(a)
-            print(' LONGEST ALBUM '.center(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '='))
-            print(a)
+#            print(a)
+            print(' LONGEST ALBUM '.center(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '░'))
+#            print(a)
             search_shortest()
-            print(' SHORTEST ALBUM '.center(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '='))
-            print(a)
+            print(' SHORTEST ALBUM '.center(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '░'))
+#            print(a)
             search_longest()
-            print(' OLDEST ALBUM '.center(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '='))
-            print(a)
+            print(' OLDEST ALBUM '.center(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '░'))
+#            print(a)
             oldest_albums()
-            print(' YOUNGEST ALBUM '.center(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '='))
-            print(a)
+            print(' YOUNGEST ALBUM '.center(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '░'))
+#            print(a)
             youngest_albums()
             #sort_by_years(True,True)
-            print(' ALL ALBUM COUNT '.center(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '='))
+            print(' ALL ALBUM COUNT '.center(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '░'))
             num_lines = albums_count()
             print("             You have {} albums in your collection.".format(num_lines))
             print(a)
-            print(a)
-            print(a)
+#            print(a)
+#            print(a)
 
 
 def lenght_of_signs(iterating_number_of_column, filename):   # checking lenght of signs for the longest value in each column
@@ -340,7 +340,7 @@ def main():  # powinno printować menu z wyborem sortowania
         if user_input == "6":
             search_shortest_longest()
         if user_input == "7":
-            show_all('temp.txt', True)
+            show_all('temp.txt', True,)
         if user_input == "8":
             edit_albums()
         if user_input == "9":
