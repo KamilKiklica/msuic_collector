@@ -96,6 +96,7 @@ def oldest_albums():
             f.close()
     show_all('temp.txt',False,False)
 
+
 def youngest_albums():      
     album_temp_list = sort_by_years()
     years_range = album_temp_list[-1][2]
@@ -124,13 +125,14 @@ def show_all(filename, user_report=False, clear=True): #debug
         album_lenght_len = 1 + dynamic_spaces_column(4,4,filename)
         a = (''.ljust(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '─'))
         if user_report == False:
-            print("|" + "Nr.".ljust(4, ' ') + "|" + "Artist:".ljust(artist_len, ' ') + "|" + "Name of Album:".ljust(album_len, ' ') + "|" + "Date:".ljust(date_len, ' ')+ "|" + "Genre:".ljust(genre_len, ' ') + "|" + "Lenght of Album:".ljust(album_lenght_len, ' '))
-            print(a)
+            print('┌' + a + '┐')
+            print("│" + "Nr.".ljust(4, ' ') + "│" + "Artist:".ljust(artist_len, ' ') + "│" + "Name of Album:".ljust(album_len, ' ') + "│" + "Date:".ljust(date_len, ' ')+ "│" + "Genre:".ljust(genre_len, ' ') + "│" + "Lenght of Album:".ljust(album_lenght_len, ' ') + '│')
+            print('├' + a + '┤')
             for i, line in enumerate(outfile):
                 lineSplitted = line.strip('\n').split(",")
-                print("|{}|{}|{}|{}|{}|{}".format(
+                print("│{}│{}│{}│{}│{}│{}│".format(
                     (str(i + 1) + ".").ljust(4, ' '), lineSplitted[0].ljust(artist_len, ' '), lineSplitted[1].ljust(album_len, ' '), lineSplitted[2].ljust(date_len, ' '), lineSplitted[3].ljust(genre_len, ' '), lineSplitted[4].ljust(album_lenght_len, ' ')))
-            print(a)
+            print('└' + a + '┘')
         if user_report == True:
 #            print(a)
             print(' LONGEST ALBUM '.center(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '░'))
@@ -152,7 +154,6 @@ def show_all(filename, user_report=False, clear=True): #debug
             print(a)
 #            print(a)
 #            print(a)
-
 
 def lenght_of_signs(iterating_number_of_column, filename):   # checking lenght of signs for the longest value in each column
     k = make_list_of_list(filename)
@@ -198,17 +199,17 @@ def show_time_range():
     print("What time range of albums release would you like to see?")
     start_date = input("Enter start date: ")
     end_date = input("Enter end date: ")
-    while start_date and end_date == int:
-        years_range = list(range(int(start_date), int(end_date)+1))
-        open('temp.txt', 'w').close()
-        for line in album_temp_list:
-            #if start_date <= album_temp_list[2] <= end_date:
-            if int(line[2]) in years_range:
-                b = ','.join(line)
-                f = open('temp.txt', 'a')
-                f.write(b)
-                f.close()
-        show_all('temp.txt')
+    years_range = list(range(int(start_date), int(end_date)+1))
+    open('temp.txt', 'w').close()
+    for line in album_temp_list:
+        #if start_date <= album_temp_list[2] <= end_date:
+        if int(line[2]) in years_range:
+            b = ','.join(line)
+            f = open('temp.txt', 'a')
+            f.write(b)
+            f.close()
+    show_all('temp.txt')
+        
 
 
 def search_by_genre(): #szukanie po gatunku, drukowanie działa
@@ -238,19 +239,32 @@ def search_by_album():
             temp_list_txt = list_from_main_file("lista.txt")
             genre_main = line[3]
             os.system('clear')
-            show_all('temp.txt', False, True)
-            open('temp.txt', 'w').close()
+            print("          Founded albums in list for searched phrase: ")
+            print('')
+            show_all('temp.txt', False,False)
+#            open('temp.txt', 'w').close()
             for line in temp_list_txt:
                 if genre_main in line[3].casefold():
                     b = ','.join(line)
-                    f = open('temp.txt', 'a')
+                    f = open('tempy.txt', 'a')
                     f.write(b)
                     f.close()
-            print(" ")        
-            print("          Suggested similar albums for this genre: ")
-            print(" ")        
-            show_all('temp.txt', False, False)
+###############EXPERIMENTAL#####################
+#            if len(list_from_main_file("temp.txt")) == 1:
+ #               pass            
+#            if len(list_from_main_file("temp.txt")) >= 1:
+#                if not genre_main in line[3].casefold():
+#                    b = '▄▄▄▄▄▄▄▄▄▄,▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄,▄▄▄▄▄,▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄,▄▄▄▄▄\n'
+#                    f = open('tempy.txt', 'a')
+#                    f.write(b)
+#                    f.close()
 
+##############END EXPERIMENTAL################## mozna w miejsce odstepu skasowac 1 linie w tempy.txt
+            print(" ")        
+            print("          Suggested albums by genre for searched phrase: ")
+            print(" ")        
+            show_all('tempy.txt', False, False)
+    open('tempy.txt', 'w').close()
 
 def search_by_artist():
     album_temp_list = list_from_main_file()
@@ -273,7 +287,7 @@ def search_shortest_longest():
     f.write(b)
     f.write(c)
     f.close()
-    show_all('temp.txt', False, False)
+    show_all('temp.txt', False,True)
     return album_temp_list
 
 def search_longest():
