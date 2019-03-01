@@ -118,7 +118,13 @@ def show_time_range():
     album_temp_list = sort_by_years()
     print("What time range of albums release would you like to see?")
     start_date = input("Enter start date: ")
+    while not (str.isdigit(start_date)):
+        start_date = input("Enter correct start date: ")
     end_date = input("Enter end date: ")
+    while not (str.isdigit(end_date)):
+        end_date = input("Enter correct end date: ")
+    while int(end_date) < int(start_date):
+        end_date = input("End date can't be smaller then start date. Please enter correct end date: ")
     years_range = list(range(int(start_date), int(end_date)+1))
     open('temp.txt', 'w').close()
     for line in album_temp_list:
