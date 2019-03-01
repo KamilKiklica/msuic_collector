@@ -46,6 +46,7 @@ def show_all(filename, user_report=False, clear=True): #debug
             print(' ALL ALBUM COUNT '.center(artist_len + album_len + date_len + genre_len + album_lenght_len + 9, '░'))
             num_lines = music_reports.albums_count()
             print("             You have {} albums in your collection.".format(num_lines))
+            music_reports.print_table(music_reports.additional_info(),"count,asc")
             print(a)
 #            print(a)
 #            print(a)

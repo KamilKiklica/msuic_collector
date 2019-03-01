@@ -304,7 +304,8 @@ def edit_albums():
         display.show_all('lista.txt')
         print('You have edited new album succesfully!''\n')  
     if user_input == "3":
-        search_by_album()
+        os.system('clear')
+        display.show_all('lista.txt')
     if user_input == "4":
         os.system('clear')
         display.show_all('lista.txt')
@@ -316,6 +317,50 @@ def replace_line(file_name, line_num, text):
     out = open(file_name, 'w')
     out.writelines(lines)
     out.close()
+
+
+def additional_info():
+    album_temp_list = list_from_main_file()
+    genre_list = []
+    for i in range(len(album_temp_list)):
+        genre_list.append(album_temp_list[i][3])
+
+    additional = {x:genre_list.count(x) for x in genre_list}
+    return (additional)
+
+def print_table(inventory, order=None):
+  k = list(inventory.keys())    #make list named k  from keys in dict.
+  v = list(inventory.values())  #make list named v from values in dict
+  k.sort(key=len,reverse=True)  #sort list k by lenght of keys (longest to smallest)
+  v.sort(reverse=True)          #sort list v (values) from the biggest to the smallest
+  key_len = len(k[0])           
+  value_len = len(str(v[0]))
+  if value_len <= 5:            #checks if lenght of biggest element in value is smaller than "name of column"
+    count_len = 5               #if yes the width of values column is constans = 5 (len of count column)
+  else:  
+    count_len = value_len + 4   #set dynamic amount of spaces for len biggest value element > len column name
+  if key_len <= 9:              #checks if lenght of biggest element in key column is smaller than "name of column"
+    item_name_len = 5          #if yes the width of key column is constans = 13 (len of name column)
+  else:
+    item_name_len = key_len #set dynamic amount of spaces for len bigest key element > len column name
+  #UNTIL HERE EVERYTHING IS GOOD
+
+  print('genre'.ljust(item_name_len, ' ') + 'count'.rjust(count_len, ' '))
+  print('-'.rjust(count_len + item_name_len, '-'))
+  if order == None:
+    for keys, values in inventory.items():
+      print(str(values).rjust(count_len, ' ') + str(keys.rjust(item_name_len, ' ')))
+      a = sum(inventory.values())
+  elif order == "count,asc":
+    for k,v in sorted(inventory.items(), key=lambda p:p[1]):
+      print(str(k.ljust(item_name_len, ' ')) + str(v).rjust(count_len, ' '))
+  elif order == "count,desc":
+    for k,v in sorted(inventory.items(), key=lambda p:p[1], reverse=True):
+      print(str(v).rjust(count_len, ' ') + str(k.rjust(item_name_len, ' ')))
+  print('-'.rjust(count_len + item_name_len, '-'))
+  a = sum(inventory.values())   #Counting whole amount of items
+  
+
 
 
 if __name__ == "__main__":
@@ -332,3 +377,7 @@ if __name__ == "__main__":
 ### podział na dwa pliki
 ### zmniejszenie funkcji (podział na mniejsze???)
 ### exoprt do pliku listy albumów
+
+
+#how many albums are given the genres)
+
